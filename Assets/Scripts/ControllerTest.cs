@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Experimental.Input;
-using UnityEngine.Experimental.Input.LowLevel;
 using TMPro;
 using System;
+using idbrii.InputValidation;
 
 public class ControllerTest : MonoBehaviour
 {
@@ -19,128 +19,147 @@ public class ControllerTest : MonoBehaviour
     public TextMeshProUGUI Input_System;
     public TextMeshProUGUI Controller_Devices_List;
     public TMP_Dropdown Controller_Dropdown;
-    private List<Gamepad> Connected_Devices_List = new List<Gamepad>();
 
     [Header("Controllers")]
     public GameObject DualShock_Controller;
     public GameObject XBOX_Controller;
 
+    int m_GamepadCount = -1;
+    GamepadMappings.Mapping m_CurrentMapping;
+
     private void Awake()
     {
         Application.runInBackground = true;
+        m_CurrentMapping = GamepadMappings.Create_Xinput();
     }
 
     void Update()
     {
         var nl = Environment.NewLine;
-        var gamepad = Gamepad.all[Controller_Dropdown.value];
-        if (gamepad != null)
-        {
-            Information.text = "Controller 1" + nl +
-                               "Display Name: " + gamepad.displayName + nl +
-                               "Name: " + gamepad.name + nl +
-                               "Short Display Name: " + gamepad.shortDisplayName + nl +
-                               "Description: " + gamepad.description + nl +
-                               "Device: " + gamepad.device + nl +
-                               "ID: " + gamepad.id + nl +
-                               "Layout: " + gamepad.layout + nl +
-                               "Native: " + gamepad.native + nl +
-                               "Noisy: " + gamepad.noisy + nl +
-                               "Path: " + gamepad.path + nl +
-                               "Remote: " + gamepad.remote + nl +
-                               "Synthetic: " + gamepad.synthetic + nl +
-                               "Variants: " + gamepad.variants;
-            Controller_Dpad.text = "UP: " + gamepad[GamepadButton.DpadUp].isPressed + nl +
-                                   "Down: " + gamepad[GamepadButton.DpadDown].isPressed + nl +
-                                   "Left: " + gamepad[GamepadButton.DpadLeft].isPressed + nl +
-                                   "Right: " + gamepad[GamepadButton.DpadRight].isPressed + nl;
-            Controller_Buttons.text = "A: " + gamepad[GamepadButton.A].isPressed + nl +
-                                      "B: " + gamepad[GamepadButton.B].isPressed + nl +
-                                      "X: " + gamepad[GamepadButton.X].isPressed + nl +
-                                      "Y: " + gamepad[GamepadButton.Y].isPressed + nl +
-                                      "O: " + gamepad[GamepadButton.Circle].isPressed + nl +
-                                      "X: " + gamepad[GamepadButton.Cross].isPressed + nl +
-                                      "/_\\: " + gamepad[GamepadButton.Triangle].isPressed + nl +
-                                      "[ ]: " + gamepad[GamepadButton.Square].isPressed + nl +
-                                      "North: " + gamepad[GamepadButton.North].isPressed + nl +
-                                      "South: " + gamepad[GamepadButton.South].isPressed + nl +
-                                      "East: " + gamepad[GamepadButton.East].isPressed + nl +
-                                      "West: " + gamepad[GamepadButton.West].isPressed + nl;
-            Controller_LeftStick.text = "Left Stick BTN: " + gamepad[GamepadButton.LeftStick].isPressed + nl +
-                                        "Left Stick X: " + gamepad.leftStick.x.ReadValue() + nl +
-                                        "Left Stick Y: " + gamepad.leftStick.y.ReadValue() + nl +
-                                        "Left Stick UP: " + gamepad.leftStick.up.ReadValue() + nl +
-                                        "Left Stick Down: " + gamepad.leftStick.down.ReadValue() + nl +
-                                        "Left Stick Left: " + gamepad.leftStick.left.ReadValue() + nl +
-                                        "Left Stick Right: " + gamepad.leftStick.right.ReadValue() + nl;
-            Controller_RightStick.text = "Right Stick BTN: " + gamepad[GamepadButton.RightStick].isPressed + nl +
-                                         "Right Stick X: " + gamepad.rightStick.x.ReadValue() + nl +
-                                         "Right Stick Y: " + gamepad.rightStick.y.ReadValue() + nl +
-                                         "Right Stick UP: " + gamepad.rightStick.up.ReadValue() + nl +
-                                         "Right Stick Down: " + gamepad.rightStick.down.ReadValue() + nl +
-                                         "Right Stick Left: " + gamepad.rightStick.left.ReadValue() + nl +
-                                         "Right Stick Right: " + gamepad.rightStick.right.ReadValue() + nl;
-            Controller_Shoulder_Trigger.text = "Left Shoulder: " + gamepad[GamepadButton.LeftShoulder].isPressed + nl +
-                                               "Right Shoulder: " + gamepad[GamepadButton.RightShoulder].isPressed + nl +
-                                               "Left Trigger: " + gamepad.leftTrigger.ReadValue() + nl +
-                                               "Right Trigger: " + gamepad.rightTrigger.ReadValue() + nl +
-                                               "Start: " + gamepad[GamepadButton.Start].isPressed + nl +
-                                               "Select: " + gamepad[GamepadButton.Select].isPressed + nl;
 
-            if (gamepad.device.name.Contains("DualShockGamepadHID"))
-            {
-                Controller_Device_Name.text = "Sony Playstation DualShock";
-                DualShock_Controller.SetActive(true);
-                XBOX_Controller.SetActive(false);
-            }
-            else
-            if (gamepad.device.name.Contains("XInputControllerWindows"))
-            {
-                Controller_Device_Name.text = "Xbox(Any Controller with XInput)";
-                DualShock_Controller.SetActive(false);
-                XBOX_Controller.SetActive(true);
-            }
-            else
-            if (gamepad.device.name.Contains("Nintendo Wireless Gamepad"))
-            {
-                Controller_Device_Name.text = "Nintendo Switch Joycon/Pro";
-                DualShock_Controller.SetActive(false);
-                XBOX_Controller.SetActive(false);
-            }
-        }
-        else
+        var names = Input.GetJoystickNames();
+        if (names.Length == 0)
         {
-            Information.text = "NULL";
+            Information.text = "No Gamepads connected";
             Controller_Dpad.text = "NULL";
             Controller_Buttons.text = "NULL";
             Controller_LeftStick.text = "NULL";
             Controller_RightStick.text = "NULL";
             Controller_Shoulder_Trigger.text = "NULL";
             Controller_Device_Name.text = "NULL";
+
+            return;
         }
 
-        InputSystemUpdate();
+        if (names.Length != m_GamepadCount)
+        {
+            RefreshSystemState();
+        }
+        var index = Controller_Dropdown.value;
+        var current_name = names[index];
+
+        m_CurrentMapping.m_GamepadId = Controller_Dropdown.value;
+
+        {
+            Information.text = $"Controller {index}" + nl +
+                               "Display Name: " + current_name + nl;
+            Controller_Device_Name.text = current_name;
+            Controller_Dpad.text = GetAxisState2D("DPAD") + nl;
+            Controller_Buttons.text = 
+                                      "North: " + GetButtonState("Button Y") + nl +
+                                      "South: " + GetButtonState("Button A") + nl +
+                                      "East: " + GetButtonState("Button B") + nl +
+                                      "West: " + GetButtonState("Button X") + nl;
+            Controller_LeftStick.text = "Left Stick BTN: " + GetButtonState("Left Stick Button") + nl +
+                                        "Left Stick: " + GetAxisState2D("Left Stick") + nl;
+            Controller_RightStick.text = "Right Stick BTN: " + GetButtonState("Right Stick Button") + nl +
+                                         "Right Stick: " + GetAxisState2D("Right Stick") + nl;
+            Controller_Shoulder_Trigger.text = "Left Shoulder: " + GetButtonState("Left Bumper") + nl +
+                                               "Right Shoulder: " + GetButtonState("Right Bumper") + nl +
+                                               "Left Trigger: " + GetAxisState1D("Left Trigger") + nl +
+                                               "Right Trigger: " + GetAxisState1D("Right Trigger") + nl +
+                                               "Start: " + GetButtonState("Start") + nl +
+                                               "Select: " + GetButtonState("Back") + nl;
+
+            if (current_name.Contains("DualShockGamepadHID"))
+            {
+                Controller_Device_Name.text = "Sony Playstation DualShock";
+                DualShock_Controller.SetActive(true);
+                XBOX_Controller.SetActive(false);
+            }
+            else
+            if (current_name.Contains("XInputControllerWindows"))
+            {
+                Controller_Device_Name.text = "Xbox(Any Controller with XInput)";
+                DualShock_Controller.SetActive(false);
+                XBOX_Controller.SetActive(true);
+            }
+            else
+            if (current_name.Contains("Nintendo Wireless Gamepad"))
+            {
+                Controller_Device_Name.text = "Nintendo Switch Joycon/Pro";
+                DualShock_Controller.SetActive(false);
+                XBOX_Controller.SetActive(false);
+            }
+        }
     }
 
-    void InputSystemUpdate()
+    string GetButtonState(string id)
+    {
+        string state = "";
+        if (m_CurrentMapping.GetButtonDown(id))
+        {
+            state += "Down";
+        }
+        if (m_CurrentMapping.GetButton(id))
+        {
+            state += "Held";
+        }
+        if (m_CurrentMapping.GetButtonUp(id))
+        {
+            state += "Up";
+        }
+        return state;
+    }
+
+    string GetAxisState1D(string id)
+    {
+        var x = m_CurrentMapping.GetAxis(id);
+        return $"{x:F1}";
+    }
+
+    string GetAxisState2D(string prefix)
+    {
+        var x = m_CurrentMapping.GetAxis(prefix + " Horizontal");
+        var y = m_CurrentMapping.GetAxis(prefix + " Vertical");
+        return $"{x:F1},{y:F1}";
+    }
+
+
+
+    void RefreshSystemState()
     {
         var nl = Environment.NewLine;
-        Input_System.text = "Devices.Count: " + InputSystem.devices.Count.ToString() + nl +
-                            "DisconnectedDevices.Count: " + InputSystem.disconnectedDevices.Count.ToString();
 
-        Connected_Devices_List.RemoveRange(0, Connected_Devices_List.Count);
-        Controller_Dropdown.options.RemoveRange(0, Controller_Dropdown.options.Count);
-        Controller_Devices_List.text = "";
-        for (int i = 0; i < Gamepad.all.Count; i++)
-        {
-            Connected_Devices_List.Add(Gamepad.all[i]);
-            Controller_Devices_List.text += Gamepad.all[i].id + ": " + Gamepad.all[i].name + nl;
-            TMP_Dropdown.OptionData temp = new TMP_Dropdown.OptionData(Gamepad.all[i].id.ToString());
-            Controller_Dropdown.options.Add(temp);
-        }
+        var names = Input.GetJoystickNames();
+
+        m_GamepadCount = names.Length;
+        Controller_Dropdown.ClearOptions();
+        Controller_Dropdown.AddOptions(names.ToList());
+        Controller_Dropdown.value = Mathf.Clamp(Controller_Dropdown.value, 0, names.Length);
         Controller_Dropdown.RefreshShownValue();
 
-        InputSystem.pollingFrequency = 120;
-        InputSystem.Update();
+        int device_count = names.Length;
+        int disconnected = names
+            .Where(string.IsNullOrEmpty)
+            .Count();
+        Input_System.text = $"Devices.Count: {device_count - disconnected}" + nl +
+                            $"DisconnectedDevices.Count: {disconnected}";
+
+        int i = 0;
+        Controller_Devices_List.text = names
+            .Aggregate("Device List", (sum, next) => string.Concat(sum, $"\n{i++} {next}"));
+                
     }
+
 }
