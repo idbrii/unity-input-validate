@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "com.github.idbrii.unity-vimeditor": "https://github.com/idbrii/unity-vimeditor.git#dev",
+    "com.unity.quicksearch": "2.0.0",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.ads": "3.4.7",
