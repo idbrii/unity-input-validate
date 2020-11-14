@@ -72,7 +72,7 @@ public class GamepadVisualization : MonoBehaviour
         UpdateButton("Back", SelectBTN);
 
 
-        var dpad = new Vector2(m_Input.GetAxis("DPAD Horizontal"), m_Input.GetAxis("DPAD Vertical"));
+        var dpad = m_Input.GetAxis2D("DPAD");
         UpdateButton(dpad.y < -0.1f, Up);
         UpdateButton(dpad.y >  0.1f, Down);
         UpdateButton(dpad.x < -0.1f, Left);

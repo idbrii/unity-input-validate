@@ -173,9 +173,8 @@ public class ControllerTest : MonoBehaviour
 
     string GetAxisState2D(string prefix)
     {
-        var x = m_CurrentMapping.GetAxis(prefix + " Horizontal");
-        var y = m_CurrentMapping.GetAxis(prefix + " Vertical");
-        return $"{x:F1},{y:F1}";
+        var v = GetAxis2D(prefix);
+        return $"{v.x:F1},{v.y:F1}";
     }
 
     public bool IsButtonHeld(string id)
@@ -186,6 +185,15 @@ public class ControllerTest : MonoBehaviour
     public float GetAxis(string id)
     {
         return m_CurrentMapping.GetAxis(id);
+    }
+
+    public Vector2 GetAxis2D(string prefix)
+    {
+        var x = m_CurrentMapping.GetAxis(prefix + " Horizontal") + m_CurrentMapping.GetAxis(prefix + " Right") - m_CurrentMapping.GetAxis(prefix + " Left");
+
+        // Maintain Unity's pattern of inverted vertical axes.
+        var y = m_CurrentMapping.GetAxis(prefix + " Vertical")   + m_CurrentMapping.GetAxis(prefix + " Down")  - m_CurrentMapping.GetAxis(prefix + " Up");
+        return new Vector2(x,y);
     }
 
 
