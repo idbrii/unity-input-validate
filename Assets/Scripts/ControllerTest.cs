@@ -97,6 +97,11 @@ public class ControllerTest : MonoBehaviour
     GamepadType DetectGamepad(string gamepad_name)
     {
 #if UNITY_IOS || UNITY_TVOS
+        if (gamepad_name.Contains("DUALSHOCK"))
+        {
+            return GamepadType.DualShock;
+        }
+
         if (HasPartialMatch(gamepad_name, new string[] {
             "Xbox",
             "[extended,wireless] joystick",
@@ -104,14 +109,14 @@ public class ControllerTest : MonoBehaviour
         {
             return GamepadType.Xbox;
         }
-
-        if (gamepad_name.Contains("DUALSHOCK"))
-        {
-            return GamepadType.DualShock;
-        }
         return GamepadType.Unknown;
 
 #elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+        if (gamepad_name.Contains("Unknown Xbox Wireless Controller"))
+        {
+            return GamepadType.Xbox;
+        }
+
         if (HasPartialMatch(gamepad_name, new string[] {
             "Sony Computer Entertainment Wireless Controller" ,
                 "Unknown DUALSHOCK 4 Wireless Controller"         ,
@@ -120,11 +125,6 @@ public class ControllerTest : MonoBehaviour
         }))
         {
             return GamepadType.DualShock;
-        }
-
-        if (gamepad_name.Contains("Unknown Xbox Wireless Controller"))
-        {
-            return GamepadType.Xbox;
         }
         return GamepadType.Unknown;
 
