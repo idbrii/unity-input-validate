@@ -38,6 +38,10 @@ public class ControllerTest : MonoBehaviour
         var nl = Environment.NewLine;
 
         var names = Input.GetJoystickNames();
+        if (names.Length != m_GamepadCount)
+        {
+            RefreshSystemState();
+        }
         if (names.Length == 0)
         {
             Information.text = "No Gamepads connected";
@@ -51,14 +55,8 @@ public class ControllerTest : MonoBehaviour
             return;
         }
 
-        if (names.Length != m_GamepadCount)
-        {
-            RefreshSystemState();
-        }
         var index = Controller_Dropdown.value;
         var current_name = names[index];
-
-        m_CurrentMapping.m_GamepadId = Controller_Dropdown.value;
 
         {
             Information.text = $"Controller {index}" + nl +
@@ -80,33 +78,72 @@ public class ControllerTest : MonoBehaviour
                                                "Right Trigger: " + GetAxisState1D("Right Trigger") + nl +
                                                "Start: " + GetButtonState("Start") + nl +
                                                "Select: " + GetButtonState("Back") + nl;
-
-            if (current_name.Contains("Sony")
-                    || current_name.Contains("PlayStation")
-                    || current_name.Contains("DualShockGamepadHID"))
-            {
-                DualShock_Controller.SetActive(true);
-                XBOX_Controller.SetActive(false);
-            }
-            else if (current_name.Contains("XInput")
-                    || current_name.Contains("Xbox")
-                    || current_name.Contains("XInputControllerWindows"))
-            {
-                DualShock_Controller.SetActive(false);
-                XBOX_Controller.SetActive(true);
-            }
-            //~ else if (current_name.Contains("Nintendo Wireless Gamepad"))
-            //~ {
-            //~     Controller_Device_Name.text = "Nintendo Switch Joycon/Pro";
-            //~     DualShock_Controller.SetActive(false);
-            //~     XBOX_Controller.SetActive(false);
-            //~ }
-            else
-            {
-                DualShock_Controller.SetActive(false);
-                XBOX_Controller.SetActive(true);
-            }
         }
+    }
+
+    enum GamepadType
+    {
+        Unknown,
+        Xbox,
+        DualShock,
+    }
+
+    bool HasPartialMatch(string haystack, string[] needles)
+    {
+        bool has_match = !string.IsNullOrEmpty(needles.FirstOrDefault(n => haystack.Contains(n)));
+        return has_match;
+    }
+
+    GamepadType DetectGamepad(string gamepad_name)
+    {
+#if UNITY_IOS || UNITY_TVOS
+        if (HasPartialMatch(gamepad_name, new string[] {
+            "Xbox",
+            "[extended,wireless] joystick",
+        }))
+        {
+            return GamepadType.Xbox;
+        }
+
+        if (gamepad_name.Contains("DUALSHOCK"))
+        {
+            return GamepadType.DualShock;
+        }
+        return GamepadType.Unknown;
+
+#elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+        if (HasPartialMatch(gamepad_name, new string[] {
+            "Sony Computer Entertainment Wireless Controller" ,
+                "Unknown DUALSHOCK 4 Wireless Controller"         ,
+                // Unknown usually uses dualshock button layout.
+                "Unknown Wireless Controller"                     ,
+        }))
+        {
+            return GamepadType.DualShock;
+        }
+
+        if (gamepad_name.Contains("Unknown Xbox Wireless Controller"))
+        {
+            return GamepadType.Xbox;
+        }
+        return GamepadType.Unknown;
+
+#else
+        // Not sure what the names are on other platforms. Here are some guesses.
+        if (gamepad_name.Contains("Sony")
+                || gamepad_name.Contains("PlayStation")
+                || gamepad_name.Contains("DualShockGamepadHID"))
+        {
+            return GamepadType.DualShock;
+        }
+        else if (gamepad_name.Contains("XInput")
+                || gamepad_name.Contains("Xbox")
+                || gamepad_name.Contains("XInputControllerWindows"))
+        {
+            return GamepadType.Xbox;
+        }
+        return GamepadType.Unknown;
+#endif
     }
 
     string GetButtonState(string id)
@@ -164,6 +201,12 @@ public class ControllerTest : MonoBehaviour
         Controller_Dropdown.value = Mathf.Clamp(Controller_Dropdown.value, 0, names.Length);
         Controller_Dropdown.RefreshShownValue();
 
+        if (names.Length == 0)
+        {
+            Controller_Dropdown.value = -1;
+            return;
+        }
+
         int device_count = names.Length;
         int disconnected = names
             .Where(string.IsNullOrEmpty)
@@ -174,7 +217,23 @@ public class ControllerTest : MonoBehaviour
         int i = 0;
         Controller_Devices_List.text = names
             .Aggregate("Device List", (sum, next) => string.Concat(sum, $"\n{i++} {next}"));
-                
+
+
+        var current_name = names[Controller_Dropdown.value];
+        bool is_dualshock = DetectGamepad(current_name) == GamepadType.DualShock;
+        DualShock_Controller.SetActive(is_dualshock);
+        XBOX_Controller.SetActive(!is_dualshock);
+
+        if (is_dualshock)
+        {
+            m_CurrentMapping = GamepadMappings.Create_DualShock();
+        }
+        else
+        {
+            m_CurrentMapping = GamepadMappings.Create_Xinput();
+        }
+        m_CurrentMapping.m_GamepadId = Controller_Dropdown.value;
+
     }
 
 }
