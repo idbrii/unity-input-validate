@@ -47,10 +47,20 @@ namespace idbrii.InputValidation
             public List<Axis> m_Axes;
             public List<Button> m_Buttons;
 
-            public float GetAxis(string id)
+            public string GetAxisName(string id)
             {
                 var axis = m_Axes.FirstOrDefault(a => a.name == id);
                 if (axis == null || axis.id < 0)
+                {
+                    return null;
+                }
+                return $"joy_{m_GamepadId}_axis_{axis.id}";
+            }
+
+            public float GetAxis(string id)
+            {
+                var axis = GetAxisName(id);
+                if (axis == null)
                 {
                     if (GetButton(id))
                     {
@@ -58,7 +68,7 @@ namespace idbrii.InputValidation
                     }
                     return 0f;
                 }
-                return Input.GetAxis($"joy_{m_GamepadId}_axis_{axis.id}");
+                return Input.GetAxis(axis);
             }
 
             // Pressed
