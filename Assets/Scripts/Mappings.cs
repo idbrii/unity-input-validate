@@ -50,7 +50,7 @@ namespace idbrii.InputValidation
             public float GetAxis(string id)
             {
                 var axis = m_Axes.FirstOrDefault(a => a.name == id);
-                if (axis == null || axis.id <= 0)
+                if (axis == null || axis.id < 0)
                 {
                     return 0f;
                 }
