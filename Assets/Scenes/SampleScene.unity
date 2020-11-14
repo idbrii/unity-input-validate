@@ -1258,38 +1258,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2113834836}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &861332944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861332942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbe4046b2272b7248bad452f964267af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  B_BTN: {fileID: 0}
-  A_BTN: {fileID: 0}
-  Y_BTN: {fileID: 0}
-  X_BTN: {fileID: 0}
-  Up: {fileID: 0}
-  Down: {fileID: 0}
-  Left: {fileID: 0}
-  Right: {fileID: 0}
-  LeftStickBTN: {fileID: 0}
-  LeftStick: {fileID: 0}
-  LeftShoulder: {fileID: 0}
-  LeftTrigger: {fileID: 0}
-  LeftTriggerText: {fileID: 0}
-  RightStickBTN: {fileID: 0}
-  RightStick: {fileID: 0}
-  RightShoulder: {fileID: 0}
-  RightTrigger: {fileID: 0}
-  RightTriggerText: {fileID: 0}
-  StartBTN: {fileID: 0}
-  SelectBTN: {fileID: 0}
 --- !u!1 &923592244
 GameObject:
   m_ObjectHideFlags: 0
@@ -3115,6 +3083,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1518536589}
     m_Modifications:
+    - target: {fileID: 5032829933974841232, guid: ff2854e0e8828954a8b88da8b804d6a5,
+        type: 3}
+      propertyPath: m_Input
+      value: 
+      objectReference: {fileID: 1518536590}
     - target: {fileID: 5209213546718659940, guid: ff2854e0e8828954a8b88da8b804d6a5,
         type: 3}
       propertyPath: m_Name
@@ -3123,7 +3096,7 @@ PrefabInstance:
     - target: {fileID: 5209213546718659940, guid: ff2854e0e8828954a8b88da8b804d6a5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5209213547735269918, guid: ff2854e0e8828954a8b88da8b804d6a5,
         type: 3}
@@ -3412,5 +3385,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: XBOX
       objectReference: {fileID: 0}
+    - target: {fileID: 4603282174225497453, guid: eae643d656e89a9479926698433e3d36,
+        type: 3}
+      propertyPath: m_Input
+      value: 
+      objectReference: {fileID: 1518536590}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eae643d656e89a9479926698433e3d36, type: 3}

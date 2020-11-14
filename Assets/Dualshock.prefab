@@ -100,26 +100,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe4046b2272b7248bad452f964267af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  B_BTN: {fileID: 0}
-  A_BTN: {fileID: 0}
-  Y_BTN: {fileID: 0}
-  X_BTN: {fileID: 0}
-  Up: {fileID: 0}
-  Down: {fileID: 0}
-  Left: {fileID: 0}
-  Right: {fileID: 0}
-  LeftStickBTN: {fileID: 0}
-  LeftStick: {fileID: 0}
-  LeftShoulder: {fileID: 0}
-  LeftTrigger: {fileID: 0}
-  LeftTriggerText: {fileID: 0}
-  RightStickBTN: {fileID: 0}
-  RightStick: {fileID: 0}
-  RightShoulder: {fileID: 0}
-  RightTrigger: {fileID: 0}
-  RightTriggerText: {fileID: 0}
-  StartBTN: {fileID: 0}
-  SelectBTN: {fileID: 0}
+  m_Input: {fileID: 0}
+  B_BTN: {fileID: 5209213548677088949}
+  A_BTN: {fileID: 5209213547568870930}
+  Y_BTN: {fileID: 5209213548179073178}
+  X_BTN: {fileID: 5209213548182880904}
+  Up: {fileID: 5209213546795120769}
+  Down: {fileID: 5209213547556990912}
+  Left: {fileID: 5209213548712828884}
+  Right: {fileID: 5209213547498335897}
+  LeftStickBTN: {fileID: 5209213548163362836}
+  LeftStick: {fileID: 5209213546967020897}
+  LeftShoulder: {fileID: 5209213547979020706}
+  LeftTrigger: {fileID: 5209213548186776004}
+  LeftTriggerText: {fileID: 5209213548109289739}
+  RightStickBTN: {fileID: 5209213547942961740}
+  RightStick: {fileID: 5209213548113825972}
+  RightShoulder: {fileID: 5209213547079468335}
+  RightTrigger: {fileID: 5209213546725144844}
+  RightTriggerText: {fileID: 5209213548422240166}
+  StartBTN: {fileID: 5209213546909488866}
+  SelectBTN: {fileID: 5209213547121039698}
 --- !u!1 &5209213546725144842
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-//~ using UnityEngine.Experimental.Input;
-//~ using UnityEngine.Experimental.Input.LowLevel;
 using UnityEngine.UI;
 
 public class GamepadVisualization : MonoBehaviour
 {
+    public ControllerTest m_Input;
+
+    [Header("Images")]
     public RawImage B_BTN;
     public RawImage A_BTN;
     public RawImage Y_BTN;
@@ -30,7 +31,6 @@ public class GamepadVisualization : MonoBehaviour
     public RawImage StartBTN;
     public RawImage SelectBTN;
 
-    ControllerTest CT = new ControllerTest();
 
     float LeftStickHalf;
     float RightStickHalf;
@@ -38,41 +38,80 @@ public class GamepadVisualization : MonoBehaviour
     Color Press = new Color(1f, 0, 0, 0.5f);
     Color NotPress = new Color(0, 0, 0, 0.5f);
 
-    private void Start()
+    void Start()
     {
-        CT = GameObject.FindWithTag("CT").GetComponent<ControllerTest>();
         LeftStickHalf = LeftStickBTN.rectTransform.sizeDelta.x / 2;
         RightStickHalf = RightStickBTN.rectTransform.sizeDelta.x / 2;
     }
 
-    // Update is called once per frame
+    // Map [-1,1] to [0,1]
+    static float MapNegativeToAbsolute(float x)
+    {
+        // First map to [0,2]
+        var out_of_2 = 1f + x;
+        // Then to [0,1]
+        return out_of_2 / 2f;
+    }
+
     void Update()
     {
-        //~ var gamepad = Gamepad.all[CT.Controller_Dropdown.value];
-        //~ if (gamepad != null)
-        //~ {
-        //~     if (gamepad[GamepadButton.Circle].isPressed)        { B_BTN.color         = Press; } else { B_BTN.color         = NotPress; }
-        //~     if (gamepad[GamepadButton.Cross].isPressed)         { A_BTN.color         = Press; } else { A_BTN.color         = NotPress; }
-        //~     if (gamepad[GamepadButton.Triangle].isPressed)      { Y_BTN.color         = Press; } else { Y_BTN.color         = NotPress; }
-        //~     if (gamepad[GamepadButton.Square].isPressed)        { X_BTN.color         = Press; } else { X_BTN.color         = NotPress; }
-        //~     if (gamepad[GamepadButton.DpadUp].isPressed)        { Up.color            = Press; } else { Up.color            = NotPress; }
-        //~     if (gamepad[GamepadButton.DpadDown].isPressed)      { Down.color          = Press; } else { Down.color          = NotPress; }
-        //~     if (gamepad[GamepadButton.DpadLeft].isPressed)      { Left.color          = Press; } else { Left.color          = NotPress; }
-        //~     if (gamepad[GamepadButton.DpadRight].isPressed)     { Right.color         = Press; } else { Right.color         = NotPress; }
-        //~     if (gamepad[GamepadButton.LeftStick].isPressed)     { LeftStickBTN.color  = Press; } else { LeftStickBTN.color  = NotPress; }
-        //~     if (gamepad[GamepadButton.LeftShoulder].isPressed)  { LeftShoulder.color  = Press; } else { LeftShoulder.color  = NotPress; }
-        //~     if (gamepad[GamepadButton.RightStick].isPressed)    { RightStickBTN.color = Press; } else { RightStickBTN.color = NotPress; }
-        //~     if (gamepad[GamepadButton.RightShoulder].isPressed) { RightShoulder.color = Press; } else { RightShoulder.color = NotPress; }
-        //~     if (gamepad[GamepadButton.Start].isPressed)         { StartBTN.color      = Press; } else { StartBTN.color      = NotPress; }
-        //~     if (gamepad[GamepadButton.Select].isPressed)        { SelectBTN.color     = Press; } else { SelectBTN.color     = NotPress; }
+        if (m_Input.Controller_Dropdown.value < 0)
+        {
+            return;
+        }
 
-        //~     LeftStick.transform.localPosition = new Vector3(LeftStickHalf * gamepad.leftStick.x.ReadValue(), LeftStickHalf * gamepad.leftStick.y.ReadValue(), 0);
-        //~     LeftTrigger.color = new Color(gamepad.leftTrigger.ReadValue(), 0, 0, 0.5f);
-        //~     LeftTriggerText.text = Mathf.Round(gamepad.leftTrigger.ReadValue() * 100) + "%";
+        UpdateButton("Button B", B_BTN);
+        UpdateButton("Button A", A_BTN);
+        UpdateButton("Button Y", Y_BTN);
+        UpdateButton("Button X", X_BTN);
+        UpdateButton("Left Stick Button", LeftStickBTN);
+        UpdateButton("Left Bumper", LeftShoulder);
+        UpdateButton("Right Stick Button", RightStickBTN);
+        UpdateButton("Right Bumper", RightShoulder);
+        UpdateButton("Start", StartBTN);
+        UpdateButton("Back", SelectBTN);
 
-        //~     RightStick.transform.localPosition = new Vector3(RightStickHalf * gamepad.rightStick.x.ReadValue(), RightStickHalf * gamepad.rightStick.y.ReadValue(), 0);
-        //~     RightTrigger.color = new Color(gamepad.rightTrigger.ReadValue(), 0, 0, 0.5f);
-        //~     RightTriggerText.text = Mathf.Round(gamepad.rightTrigger.ReadValue() * 100) + "%";
-        //~ }
+
+        var dpad = new Vector2(m_Input.GetAxis("DPAD Horizontal"), m_Input.GetAxis("DPAD Vertical"));
+        UpdateButton(dpad.y < -0.1f, Up);
+        UpdateButton(dpad.y >  0.1f, Down);
+        UpdateButton(dpad.x < -0.1f, Left);
+        UpdateButton(dpad.x >  0.1f, Right);
+
+
+        // Unity input uses inverted vertical sticks by default.
+        var left_stick  = new Vector2(m_Input.GetAxis("Left Stick Horizontal"),  -m_Input.GetAxis("Left Stick Vertical"));
+        var right_stick = new Vector2(m_Input.GetAxis("Right Stick Horizontal"), -m_Input.GetAxis("Right Stick Vertical"));
+
+        LeftStick.transform.localPosition = left_stick * LeftStickHalf;
+        RightStick.transform.localPosition = right_stick * RightStickHalf;
+
+
+        var left_trigger = MapNegativeToAbsolute(m_Input.GetAxis("Left Trigger"));
+        var right_trigger = MapNegativeToAbsolute(m_Input.GetAxis("Right Trigger"));
+
+        LeftTrigger.color = new Color(left_trigger, 0, 0, 0.5f);
+        LeftTriggerText.text = left_trigger.ToString("P0");
+
+        RightTrigger.color = new Color(right_trigger, 0, 0, 0.5f);
+        RightTriggerText.text = right_trigger.ToString("P0");
     }
+
+    void UpdateButton(string id, RawImage overlay)
+    {
+        UpdateButton(m_Input.IsButtonHeld(id), overlay);
+    }
+
+    void UpdateButton(bool is_held, RawImage overlay)
+    {
+        if (is_held)
+        {
+            overlay.color = Press;
+        }
+        else
+        {
+            overlay.color = NotPress;
+        }
+    }
+
 }

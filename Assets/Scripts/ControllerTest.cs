@@ -81,25 +81,30 @@ public class ControllerTest : MonoBehaviour
                                                "Start: " + GetButtonState("Start") + nl +
                                                "Select: " + GetButtonState("Back") + nl;
 
-            if (current_name.Contains("DualShockGamepadHID"))
+            if (current_name.Contains("Sony")
+                    || current_name.Contains("PlayStation")
+                    || current_name.Contains("DualShockGamepadHID"))
             {
-                Controller_Device_Name.text = "Sony Playstation DualShock";
                 DualShock_Controller.SetActive(true);
                 XBOX_Controller.SetActive(false);
             }
-            else
-            if (current_name.Contains("XInputControllerWindows"))
+            else if (current_name.Contains("XInput")
+                    || current_name.Contains("Xbox")
+                    || current_name.Contains("XInputControllerWindows"))
             {
-                Controller_Device_Name.text = "Xbox(Any Controller with XInput)";
                 DualShock_Controller.SetActive(false);
                 XBOX_Controller.SetActive(true);
             }
+            //~ else if (current_name.Contains("Nintendo Wireless Gamepad"))
+            //~ {
+            //~     Controller_Device_Name.text = "Nintendo Switch Joycon/Pro";
+            //~     DualShock_Controller.SetActive(false);
+            //~     XBOX_Controller.SetActive(false);
+            //~ }
             else
-            if (current_name.Contains("Nintendo Wireless Gamepad"))
             {
-                Controller_Device_Name.text = "Nintendo Switch Joycon/Pro";
                 DualShock_Controller.SetActive(false);
-                XBOX_Controller.SetActive(false);
+                XBOX_Controller.SetActive(true);
             }
         }
     }
@@ -133,6 +138,16 @@ public class ControllerTest : MonoBehaviour
         var x = m_CurrentMapping.GetAxis(prefix + " Horizontal");
         var y = m_CurrentMapping.GetAxis(prefix + " Vertical");
         return $"{x:F1},{y:F1}";
+    }
+
+    public bool IsButtonHeld(string id)
+    {
+        return m_CurrentMapping.GetButton(id);
+    }
+
+    public float GetAxis(string id)
+    {
+        return m_CurrentMapping.GetAxis(id);
     }
 
 
