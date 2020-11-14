@@ -52,6 +52,10 @@ namespace idbrii.InputValidation
                 var axis = m_Axes.FirstOrDefault(a => a.name == id);
                 if (axis == null || axis.id < 0)
                 {
+                    if (GetButton(id))
+                    {
+                        return 1f;
+                    }
                     return 0f;
                 }
                 return Input.GetAxis($"joy_{m_GamepadId}_axis_{axis.id}");
