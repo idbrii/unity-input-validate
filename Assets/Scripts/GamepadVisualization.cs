@@ -48,30 +48,31 @@ public class GamepadVisualization : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //~ if (Gamepad.all[CT.Controller_Dropdown.value] != null)
+        //~ var gamepad = Gamepad.all[CT.Controller_Dropdown.value];
+        //~ if (gamepad != null)
         //~ {
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.Circle].isPressed) { B_BTN.color = Press; } else { B_BTN.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.Cross].isPressed) { A_BTN.color = Press; } else { A_BTN.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.Triangle].isPressed) { Y_BTN.color = Press; } else { Y_BTN.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.Square].isPressed) { X_BTN.color = Press; } else { X_BTN.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.DpadUp].isPressed) { Up.color = Press; } else { Up.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.DpadDown].isPressed) { Down.color = Press; } else { Down.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.DpadLeft].isPressed) { Left.color = Press; } else { Left.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.DpadRight].isPressed) { Right.color = Press; } else { Right.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.LeftStick].isPressed) { LeftStickBTN.color = Press; } else { LeftStickBTN.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.LeftShoulder].isPressed) { LeftShoulder.color = Press; } else { LeftShoulder.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.RightStick].isPressed) { RightStickBTN.color = Press; } else { RightStickBTN.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.RightShoulder].isPressed) { RightShoulder.color = Press; } else { RightShoulder.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.Start].isPressed) { StartBTN.color = Press; } else { StartBTN.color = NotPress; }
-        //~     if (Gamepad.all[CT.Controller_Dropdown.value][GamepadButton.Select].isPressed) { SelectBTN.color = Press; } else { SelectBTN.color = NotPress; }
+        //~     if (gamepad[GamepadButton.Circle].isPressed)        { B_BTN.color         = Press; } else { B_BTN.color         = NotPress; }
+        //~     if (gamepad[GamepadButton.Cross].isPressed)         { A_BTN.color         = Press; } else { A_BTN.color         = NotPress; }
+        //~     if (gamepad[GamepadButton.Triangle].isPressed)      { Y_BTN.color         = Press; } else { Y_BTN.color         = NotPress; }
+        //~     if (gamepad[GamepadButton.Square].isPressed)        { X_BTN.color         = Press; } else { X_BTN.color         = NotPress; }
+        //~     if (gamepad[GamepadButton.DpadUp].isPressed)        { Up.color            = Press; } else { Up.color            = NotPress; }
+        //~     if (gamepad[GamepadButton.DpadDown].isPressed)      { Down.color          = Press; } else { Down.color          = NotPress; }
+        //~     if (gamepad[GamepadButton.DpadLeft].isPressed)      { Left.color          = Press; } else { Left.color          = NotPress; }
+        //~     if (gamepad[GamepadButton.DpadRight].isPressed)     { Right.color         = Press; } else { Right.color         = NotPress; }
+        //~     if (gamepad[GamepadButton.LeftStick].isPressed)     { LeftStickBTN.color  = Press; } else { LeftStickBTN.color  = NotPress; }
+        //~     if (gamepad[GamepadButton.LeftShoulder].isPressed)  { LeftShoulder.color  = Press; } else { LeftShoulder.color  = NotPress; }
+        //~     if (gamepad[GamepadButton.RightStick].isPressed)    { RightStickBTN.color = Press; } else { RightStickBTN.color = NotPress; }
+        //~     if (gamepad[GamepadButton.RightShoulder].isPressed) { RightShoulder.color = Press; } else { RightShoulder.color = NotPress; }
+        //~     if (gamepad[GamepadButton.Start].isPressed)         { StartBTN.color      = Press; } else { StartBTN.color      = NotPress; }
+        //~     if (gamepad[GamepadButton.Select].isPressed)        { SelectBTN.color     = Press; } else { SelectBTN.color     = NotPress; }
 
-        //~     LeftStick.transform.localPosition = new Vector3(LeftStickHalf * Gamepad.all[CT.Controller_Dropdown.value].leftStick.x.ReadValue(), LeftStickHalf * Gamepad.all[CT.Controller_Dropdown.value].leftStick.y.ReadValue(), 0);
-        //~     LeftTrigger.color = new Color(Gamepad.all[CT.Controller_Dropdown.value].leftTrigger.ReadValue(), 0, 0, 0.5f);
-        //~     LeftTriggerText.text = Mathf.Round(Gamepad.all[CT.Controller_Dropdown.value].leftTrigger.ReadValue() * 100) + "%";
+        //~     LeftStick.transform.localPosition = new Vector3(LeftStickHalf * gamepad.leftStick.x.ReadValue(), LeftStickHalf * gamepad.leftStick.y.ReadValue(), 0);
+        //~     LeftTrigger.color = new Color(gamepad.leftTrigger.ReadValue(), 0, 0, 0.5f);
+        //~     LeftTriggerText.text = Mathf.Round(gamepad.leftTrigger.ReadValue() * 100) + "%";
 
-        //~     RightStick.transform.localPosition = new Vector3(RightStickHalf * Gamepad.all[CT.Controller_Dropdown.value].rightStick.x.ReadValue(), RightStickHalf * Gamepad.all[CT.Controller_Dropdown.value].rightStick.y.ReadValue(), 0);
-        //~     RightTrigger.color = new Color(Gamepad.all[CT.Controller_Dropdown.value].rightTrigger.ReadValue(), 0, 0, 0.5f);
-        //~     RightTriggerText.text = Mathf.Round(Gamepad.all[CT.Controller_Dropdown.value].rightTrigger.ReadValue() * 100) + "%";
+        //~     RightStick.transform.localPosition = new Vector3(RightStickHalf * gamepad.rightStick.x.ReadValue(), RightStickHalf * gamepad.rightStick.y.ReadValue(), 0);
+        //~     RightTrigger.color = new Color(gamepad.rightTrigger.ReadValue(), 0, 0, 0.5f);
+        //~     RightTriggerText.text = Mathf.Round(gamepad.rightTrigger.ReadValue() * 100) + "%";
         //~ }
     }
 }
