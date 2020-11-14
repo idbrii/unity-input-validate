@@ -343,7 +343,7 @@ PrefabInstance:
     - target: {fileID: 4428213246848406149, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4428213246848406149, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
@@ -368,7 +368,7 @@ PrefabInstance:
     - target: {fileID: 4428213246848406149, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
       propertyPath: m_text
-      value: Go testbed
+      value: Goto testbed
       objectReference: {fileID: 0}
     - target: {fileID: 4428213248241657896, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
