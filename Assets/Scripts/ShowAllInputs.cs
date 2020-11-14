@@ -60,7 +60,7 @@ namespace idbrii.InputValidation
             {
                 m_sb.Append(axis);
                 m_sb.Append(": ");
-                m_sb.AppendFormat("{0:F2}", Input.GetAxis(axis));
+                m_sb.AppendFormat("{0,5:F2}", Input.GetAxis(axis));
                 m_sb.Append("\n");
             }
 
