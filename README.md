@@ -3,6 +3,14 @@ Unity Requirement: 2019.1+
 
 Validates the Legacy Input System
 
+-----
+## Screenshots
+
+Scene 'detectgamepad':
+![Showing the controller layout](https://user-images.githubusercontent.com/43559/99154159-83834200-2662-11eb-93e0-b87b6fa568a1.png)
+
+Scene 'showinput':
+![Showing the raw input detection](https://user-images.githubusercontent.com/43559/99154239-1ae89500-2663-11eb-9c7e-45f96b53da94.png)
 
 -----
 ## Known Issue
