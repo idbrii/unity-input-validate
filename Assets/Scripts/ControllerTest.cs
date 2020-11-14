@@ -31,6 +31,7 @@ public class ControllerTest : MonoBehaviour
     {
         Application.runInBackground = true;
         m_CurrentMapping = GamepadMappings.Create_Xinput();
+        Controller_Dropdown.onValueChanged.AddListener((i) => RefreshSystemState());
     }
 
     void Update()
