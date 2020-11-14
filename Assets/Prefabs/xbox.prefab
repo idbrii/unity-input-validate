@@ -1461,10 +1461,10 @@ GameObject:
   m_Component:
   - component: {fileID: 874226749513348290}
   - component: {fileID: 874226750242648997}
-  - component: {fileID: 874226750242649018}
+  - component: {fileID: -1463419921639776086}
   - component: {fileID: 4603282174225497453}
   m_Layer: 5
-  m_Name: XBOX
+  m_Name: xbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1513,7 +1513,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874226750242649016}
   m_CullTransparentMesh: 0
---- !u!114 &874226750242649018
+--- !u!114 &-1463419921639776086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1522,7 +1522,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 874226750242649016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1532,13 +1532,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 238b69be870df294d9c3fa7f4853e7b2, type: 3}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+  m_Sprite: {fileID: 21300000, guid: 238b69be870df294d9c3fa7f4853e7b2, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &4603282174225497453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1551,6 +1554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe4046b2272b7248bad452f964267af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Input: {fileID: 0}
   B_BTN: {fileID: 874226748509007977}
   A_BTN: {fileID: 874226749413802190}
   Y_BTN: {fileID: 874226749017644614}
