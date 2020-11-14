@@ -17,7 +17,6 @@ public class ControllerTest : MonoBehaviour
     public TextMeshProUGUI Controller_Shoulder_Trigger;
     public TextMeshProUGUI Controller_Device_Name;
     public TextMeshProUGUI Input_System;
-    public TextMeshProUGUI Controller_Devices_List;
     public TMP_Dropdown Controller_Dropdown;
 
     [Header("Controllers")]
@@ -222,11 +221,6 @@ public class ControllerTest : MonoBehaviour
             .Count();
         Input_System.text = $"Devices.Count: {device_count - disconnected}" + nl +
                             $"DisconnectedDevices.Count: {disconnected}";
-
-        int i = 0;
-        Controller_Devices_List.text = names
-            .Aggregate("Device List", (sum, next) => string.Concat(sum, $"\n{i++} {next}"));
-
 
         var current_name = names[Controller_Dropdown.value];
         bool is_dualshock = DetectGamepad(current_name) == GamepadType.DualShock;
