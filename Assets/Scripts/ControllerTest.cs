@@ -63,7 +63,7 @@ public class ControllerTest : MonoBehaviour
             Information.text = $"Controller {index}" + nl +
                                "Display Name: " + current_name + nl;
             Controller_Device_Name.text = current_name;
-            Controller_Dpad.text = GetAxisState2D("DPAD") + nl;
+            Controller_Dpad.text = "DPAD: " + nl + GetAxisState2D("DPAD") + nl;
             Controller_Buttons.text = 
                                       "North: " + GetButtonState("Button Y") + nl +
                                       "South: " + GetButtonState("Button A") + nl +
