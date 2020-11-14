@@ -36,7 +36,7 @@ namespace idbrii.InputValidation
     public class ShowAllInputs : MonoBehaviour
     {
         public int m_GamepadIndex = 0;
-        public int m_MaxGamepadAxes = 6;
+        public int m_MaxGamepadAxes = 19;
         public TextMeshProUGUI m_Axis;
         public TextMeshProUGUI m_Button;
 
@@ -46,7 +46,7 @@ namespace idbrii.InputValidation
 
         void Awake()
         {
-            for (int i = 0; i < m_MaxGamepadAxes; ++i)
+            for (int i = 0; i <= m_MaxGamepadAxes; ++i)
             {
                 m_InputManagerAxes.Add(string.Concat("joy_", m_GamepadIndex, "_axis_", i));
             }
