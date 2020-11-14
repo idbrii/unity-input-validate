@@ -125,10 +125,35 @@ namespace idbrii.InputValidation
             };
         }
 
-        public static Mapping Create_DualShock()
-        {
-            // I think these are the same?
-            return Create_Xinput();
+        public static Mapping Create_DualShock() { // DualShock 4 OSX
+            return new Mapping{
+
+                m_Buttons = new List<Button>
+                {
+                    new Button{ name="Button A",           key=KeyCode.JoystickButton1 },
+                    new Button{ name="Button B",           key=KeyCode.JoystickButton2 },
+                    new Button{ name="Button X",           key=KeyCode.JoystickButton0 },
+                    new Button{ name="Button Y",           key=KeyCode.JoystickButton3 },
+                    new Button{ name="Left Bumper",        key=KeyCode.JoystickButton4 },
+                    new Button{ name="Right Bumper",       key=KeyCode.JoystickButton5 },
+                    new Button{ name="Back",               key=KeyCode.JoystickButton8 },
+                    new Button{ name="Start",              key=KeyCode.JoystickButton9 },
+                    new Button{ name="Left Stick Button",  key=KeyCode.JoystickButton10 },
+                    new Button{ name="Right Stick Button", key=KeyCode.JoystickButton11 },
+                 },
+
+                m_Axes = new List<Axis>
+                {
+                    new Axis{ name="Left Stick Vertical",    id=1 },
+                    new Axis{ name="Left Stick Horizontal",  id=0 },
+                    new Axis{ name="Right Stick Vertical",   id=3 },
+                    new Axis{ name="Right Stick Horizontal", id=2 },
+                    new Axis{ name="Left Trigger",           id=4 },
+                    new Axis{ name="Right Trigger",          id=5 },
+                    new Axis{ name="DPAD Vertical",          id=11  }, // "Bluetooth uses 11, but wired uses 7."
+                    new Axis{ name="DPAD Horizontal",        id=10  }, // "Bluetooth uses 10, but wired uses 6."
+                }
+            };
         }
 
 
@@ -160,44 +185,6 @@ namespace idbrii.InputValidation
                     new Axis{ name="Right Trigger",          id=9 },
                     new Axis{ name="DPAD Vertical",          id=6 },
                     new Axis{ name="DPAD Horizontal",        id=5 },
-                }
-            };
-        }
-
-#elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
-        public static Mapping Create_Xinput()
-        {
-            // I think these are the same?
-            return Create_DualShock();
-        }
-
-        public static Mapping Create_DualShock() { // DualShock 4 OSX
-            return new Mapping{
-
-                m_Buttons = new List<Button>
-                {
-                    new Button{ name="Button A",           key=KeyCode.JoystickButton1 },
-                    new Button{ name="Button B",           key=KeyCode.JoystickButton2 },
-                    new Button{ name="Button X",           key=KeyCode.JoystickButton0 },
-                    new Button{ name="Button Y",           key=KeyCode.JoystickButton3 },
-                    new Button{ name="Left Bumper",        key=KeyCode.JoystickButton4 },
-                    new Button{ name="Right Bumper",       key=KeyCode.JoystickButton5 },
-                    new Button{ name="Back",               key=KeyCode.JoystickButton8 },
-                    new Button{ name="Start",              key=KeyCode.JoystickButton9 },
-                    new Button{ name="Left Stick Button",  key=KeyCode.JoystickButton10 },
-                    new Button{ name="Right Stick Button", key=KeyCode.JoystickButton11 },
-                 },
-
-                m_Axes = new List<Axis>
-                {
-                    new Axis{ name="Left Stick Vertical",    id=1 },
-                    new Axis{ name="Left Stick Horizontal",  id=0 },
-                    new Axis{ name="Right Stick Vertical",   id=3 },
-                    new Axis{ name="Right Stick Horizontal", id=2 },
-                    new Axis{ name="Left Trigger",           id=4 },
-                    new Axis{ name="Right Trigger",          id=5 },
-                    new Axis{ name="DPAD Vertical",          id=11  }, // "Bluetooth uses 11, but wired uses 7."
-                    new Axis{ name="DPAD Horizontal",        id=10  }, // "Bluetooth uses 10, but wired uses 6."
                 }
             };
         }
