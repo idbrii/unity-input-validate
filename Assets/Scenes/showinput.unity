@@ -343,7 +343,7 @@ PrefabInstance:
     - target: {fileID: 4428213246848406149, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 12
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4428213246848406149, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
@@ -358,7 +358,7 @@ PrefabInstance:
     - target: {fileID: 4428213246848406149, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4428213246848406149, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
@@ -368,12 +368,17 @@ PrefabInstance:
     - target: {fileID: 4428213246848406149, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
       propertyPath: m_text
-      value: Goto testbed
+      value: Goto detectgamepad
+      objectReference: {fileID: 0}
+    - target: {fileID: 4428213246848406149, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
+        type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4428213248241657896, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
       propertyPath: m_Destination
-      value: testbed
+      value: detectgamepad
       objectReference: {fileID: 0}
     - target: {fileID: 4428213248241657897, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
@@ -443,12 +448,12 @@ PrefabInstance:
     - target: {fileID: 4428213248241657897, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 210
       objectReference: {fileID: 0}
     - target: {fileID: 4428213248241657897, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4428213248241657897, guid: 6f582be0f75ff4ad18e9cec06bcd7e50,
         type: 3}
